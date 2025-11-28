@@ -1,26 +1,22 @@
-{% extends 'base.html' %}
-{% block title %}Add Marks{% endblock %}
+{% extends "base.html" %}
 {% block content %}
-<div class="dashboard-container">
-    <a href="/marks" class="back-btn mb-2">Back</a>
-    <h2>Add Marks</h2>
-    <form method="POST">
-        <div class="mb-3">
-            <label>Student:</label>
-            <select name="student_id" class="form-select" required>
-                <option value="">Select Student</option>
-                {% for student in students %}
-                <option value="{{ student.id }}">{{ student.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        {% for subject in subjects %}
-        <div class="mb-3">
-            <label>{{ subject.name }}:</label>
-            <input type="number" name="marks_{{ subject.id }}" class="form-control" min="0" max="100" required>
-        </div>
-        {% endfor %}
-        <button type="submit" class="btn btn-success">Add Marks</button>
-    </form>
+<div class="auth-card">
+  <h2>Add Marks</h2>
+  <form method="POST">
+    <select name="student_id" required>
+      <option value="">Select Student</option>
+      {% for s in students %}
+        <option value="{{ s.id }}">{{ s.name }}</option>
+      {% endfor %}
+    </select>
+
+    {% for sub in subjects %}
+      <input type="number" name="marks_{{ sub.id }}" placeholder="Marks for {{ sub.name }}" min="0" max="100">
+    {% endfor %}
+
+    <button type="submit" class="btn-success">Submit</button>
+    <a href="{{ url_for('marks_list') }}" class="back-btn">Back</a>
+  </form>
 </div>
 {% endblock %}
+  

@@ -1,8 +1,11 @@
-{% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+{% extends "base.html" %}
 {% block content %}
 <div class="auth-card">
-    <h1>Welcome</h1>
-    <p><a href="/login" class="btn btn-primary">Login</a> or <a href="/register" class="btn btn-success">Register</a></p>
+  <h1>Welcome to Student Management</h1>
+  <h3>Manage your students easily and securely</h3>
+  <div style="margin-top:20px;">
+    <a href="{{ url_for('login') }}"><button class="btn-primary">Login</button></a>
+    <a href="{{ url_for('register') }}"><button class="btn-success">Register</button></a>
+  </div>
 </div>
 {% endblock %}

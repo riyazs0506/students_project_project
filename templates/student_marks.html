@@ -1,28 +1,21 @@
-{% extends 'base.html' %}
-{% block title %}{{ student.name }} Marks{% endblock %}
+{% extends "base.html" %}
 {% block content %}
 <div class="dashboard-container">
-    <a href="/marks" class="back-btn mb-2">Back</a>
-    <h2>{{ student.name }} - Marks</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Date</th>
-                {% for subject in subjects %}
-                <th>{{ subject.name }}</th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for mark in marks %}
-            <tr>
-                <td>{{ mark.created_at.strftime("%Y-%m-%d") }}</td>
-                {% for subject in subjects %}
-                <td>{{ mark['marks_' + str(subject.id)] }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <div class="dashboard-header">
+    <h2>Marks for {{ student.name }}</h2>
+    <a href="{{ url_for('students_list') }}" class="back-btn">Back</a>
+  </div>
+
+  <table>
+    <thead><tr><th>Subject</th><th>Marks</th></tr></thead>
+    <tbody>
+      {% for m in marks %}
+      <tr>
+        <td>{{ m.subject_name }}</td>
+        <td>{{ m.marks }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

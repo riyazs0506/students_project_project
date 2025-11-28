@@ -1,27 +1,22 @@
-{% extends 'base.html' %}
-{% block title %}Marks{% endblock %}
+{% extends "base.html" %}
 {% block content %}
 <div class="dashboard-container">
-    <a href="/dashboard" class="back-btn mb-2">Back</a>
-    <h2>Marks</h2>
-    <a href="/add_marks" class="btn btn-success mb-3">Add Marks</a>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th><th>Student</th><th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for mark in marks %}
-            <tr>
-                <td>{{ mark.id }}</td>
-                <td>{{ mark.student_name }}</td>
-                <td>
-                    <a href="/student_marks/{{ mark.student_id }}" class="btn btn-primary btn-sm">View</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <div class="dashboard-header"><h2>Marks</h2></div>
+  {% if session.get('role') == 'Principal' %}
+    <a href="{{ url_for('add_marks') }}" class="btn-success mb-3">Add Marks</a>
+  {% endif %}
+  <table>
+    <thead><tr><th>ID</th><th>Student</th><th>Subject</th><th>Marks</th></tr></thead>
+    <tbody>
+      {% for m in marks %}
+      <tr>
+        <td>{{ m.id }}</td>
+        <td><a href="{{ url_for('student_marks', student_id=m.student_id) }}">{{ m.student_name }}</a></td>
+        <td>{{ m.subject_name }}</td>
+        <td>{{ m.marks }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

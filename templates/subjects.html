@@ -1,27 +1,27 @@
-{% extends 'base.html' %}
-{% block title %}Subjects{% endblock %}
+{% extends "base.html" %}
 {% block content %}
 <div class="dashboard-container">
-    <a href="/dashboard" class="back-btn mb-2">Back</a>
-    <h2>Subjects</h2>
-    <a href="/add_subject" class="btn btn-success mb-3">Add Subject</a>
-    <table class="table table-striped">
-        <thead>
-            <tr><th>ID</th><th>Subject Name</th><th>Actions</th></tr>
-        </thead>
-        <tbody>
-            {% for subject in subjects %}
-            <tr>
-                <td>{{ subject.id }}</td>
-                <td>{{ subject.name }}</td>
-                <td>
-                    <form action="/delete_subject/{{ subject.id }}" method="POST" style="display:inline;">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <div class="dashboard-header"><h2>Subjects</h2></div>
+  {% if session.get('role') == 'Principal' %}
+    <a href="{{ url_for('add_subject') }}" class="btn-success mb-3">Add Subject</a>
+  {% endif %}
+  <table>
+    <thead><tr><th>ID</th><th>Name</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for sub in subjects %}
+      <tr>
+        <td>{{ sub.id }}</td>
+        <td>{{ sub.name }}</td>
+        <td>
+          {% if session.get('role') == 'Principal' %}
+          <form method="POST" action="{{ url_for('delete_subject', subject_id=sub.id) }}" class="inline">
+            <button class="btn-sm logout-btn" onclick="return confirm('Delete subject?')">Delete</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

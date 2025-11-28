@@ -1,26 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Student Management{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Student Management</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      <div class="flash-messages">
-        {% for category, message in messages %}
-          <div class="alert {{ category }}">{{ message }}</div>
-        {% endfor %}
-      </div>
-      {% endif %}
-    {% endwith %}
 
-    <div class="container">
-        {% block content %}{% endblock %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% if session.get('role') == 'Principal' %}{{ url_for('principal_dashboard') }}{% else %}{{ url_for('home') }}{% endif %}">SMS</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        {% if session.get('user_id') %}
+        <li class="nav-item"><a class="nav-link" href="{% if session.get('role') == 'Principal' %}{{ url_for('principal_dashboard') }}{% else %}{{ url_for('teacher_dashboard') }}{% endif %}">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('students_list') }}">Students</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('teachers_list') }}">Teachers</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('subjects_list') }}">Subjects</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('marks_list') }}">Marks</a></li>
+        <li class="nav-item"><a class="nav-link logout-btn" href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<div class="flash-messages">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

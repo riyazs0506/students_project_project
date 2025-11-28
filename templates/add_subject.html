@@ -1,12 +1,11 @@
-{% extends 'base.html' %}
-{% block title %}Add Subject{% endblock %}
+{% extends "base.html" %}
 {% block content %}
-<div class="dashboard-container">
-    <a href="/subjects" class="back-btn mb-2">Back</a>
-    <h2>Add Subject</h2>
-    <form method="POST">
-        <input type="text" name="name" placeholder="Subject Name" required>
-        <button type="submit" class="btn btn-success">Add Subject</button>
-    </form>
+<div class="auth-card">
+  <h2>Add Subject</h2>
+  <form method="POST">
+    <input type="text" name="name" placeholder="Subject Name" required>
+    <button type="submit" class="btn-success">Add Subject</button>
+    <a href="{{ url_for('subjects_list') }}" class="back-btn">Back</a>
+  </form>
 </div>
 {% endblock %}

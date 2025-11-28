@@ -1,28 +1,32 @@
-{% extends 'base.html' %}
-{% block title %}Dashboard{% endblock %}
+{% extends "base.html" %}
 {% block content %}
 <div class="dashboard-container">
-    <div class="dashboard-header">
-        <h2>Welcome, {{ name }}</h2>
-        <a href="/logout" class="logout-btn">Logout</a>
+  <div class="dashboard-header">
+    <h2>Principal Dashboard — {{ name }}</h2>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+  </div>
+
+  <div class="dashboard-cards">
+    <div class="card">
+      <h3>Manage Students</h3>
+      <p>Total: {{ students_count }}</p>
+      <a class="btn-success" href="{{ url_for('students_list') }}">Go</a>
     </div>
-    <div class="dashboard-cards">
-        <div class="card">
-            <h3>Students</h3>
-            <p><a href="/students" class="btn btn-primary btn-sm">Manage Students</a></p>
-        </div>
-        <div class="card">
-            <h3>Teachers</h3>
-            <p><a href="/teachers" class="btn btn-primary btn-sm">Manage Teachers</a></p>
-        </div>
-        <div class="card">
-            <h3>Subjects</h3>
-            <p><a href="/subjects" class="btn btn-primary btn-sm">Manage Subjects</a></p>
-        </div>
-        <div class="card">
-            <h3>Marks</h3>
-            <p><a href="/marks" class="btn btn-primary btn-sm">Manage Marks</a></p>
-        </div>
+    <div class="card">
+      <h3>Manage Teachers</h3>
+      <p>Total: {{ teachers_count }}</p>
+      <a class="btn-success" href="{{ url_for('teachers_list') }}">Go</a>
     </div>
+    <div class="card">
+      <h3>Manage Subjects</h3>
+      <p>Total: {{ subjects_count }}</p>
+      <a class="btn-success" href="{{ url_for('subjects_list') }}">Go</a>
+    </div>
+    <div class="card">
+      <h3>Manage Marks</h3>
+      <p>Total: {{ marks_count }}</p>
+      <a class="btn-success" href="{{ url_for('marks_list') }}">Go</a>
+    </div>
+  </div>
 </div>
 {% endblock %}

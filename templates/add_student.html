@@ -1,19 +1,18 @@
-{% extends 'base.html' %}
-{% block title %}{{ 'Edit' if student else 'Add' }} Student{% endblock %}
+{% extends "base.html" %}
 {% block content %}
-<div class="dashboard-container">
-    <a href="/students" class="back-btn mb-2">Back</a>
-    <h2>{{ 'Edit' if student else 'Add' }} Student</h2>
-    <form method="POST">
-        <input type="text" name="name" placeholder="Full Name" value="{{ student.name if student else '' }}" required>
-        <input type="text" name="grade" placeholder="Grade" value="{{ student.grade if student else '' }}" required>
-        <select name="teacher_id">
-            <option value="">Select Teacher</option>
-            {% for t in teachers %}
-            <option value="{{ t.id }}" {% if student and t.id == student.teacher_id %}selected{% endif %}>{{ t.name }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit" class="btn btn-success">{{ 'Update' if student else 'Add' }}</button>
-    </form>
+<div class="auth-card">
+  <h2>Add Student</h2>
+  <form method="POST">
+    <input type="text" name="name" placeholder="Student Name" required>
+    <input type="text" name="grade" placeholder="Grade">
+    <select name="teacher_id">
+      <option value="">Select Teacher</option>
+      {% for t in teachers %}
+        <option value="{{ t.id }}">{{ t.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn-success">Add Student</button>
+    <a href="{{ url_for('students_list') }}" class="back-btn">Back</a>
+  </form>
 </div>
 {% endblock %}
